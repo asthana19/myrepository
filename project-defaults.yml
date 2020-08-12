@@ -1,0 +1,40 @@
+swarm:
+  management:
+    http:
+      disable: true 
+#  https:
+#    keystore: 
+#      path: /path-to-keystore/keystore.jks 
+#      password: anypassword
+#    certificate:
+#      alias: selfsigned
+  logging:
+    CONSOLE:
+      named-formatter: LOG_FORMATTER
+    custom-handlers:
+      EMS:
+        named-formatter: LOG_FORMATTER
+        attribute-class: com.tandem.logging.EmsTokensHandler
+        module: com.hpe.nsk.logger
+        level: SEVERE
+    pattern-formatters:
+      LOG_FORMATTER:
+        pattern: "${nsk.process.node} ${nsk.process.cpu} ${nsk.process.pin} ${nsk.process.name} %d{YYYY-MM-dd HH:mm:ss}  %p [%c] %s%e%n"
+    periodic-rotating-file-handlers:
+      FILE:
+        file:
+           path: ../logs/nsmsc.log
+        suffix: .yyyy-MM-dd
+        named-formatter: LOG_FORMATTER
+        level: INFO
+        autoflush: true
+    root-logger:
+      level: INFO
+      autoflush: true
+      handlers:
+      - CONSOLE
+      - FILE
+      - EMS
+
+
+     
